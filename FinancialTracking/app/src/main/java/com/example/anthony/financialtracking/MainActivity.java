@@ -1,5 +1,7 @@
 package com.example.anthony.financialtracking;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.app.Activity;
 import android.net.Uri;
@@ -7,11 +9,17 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements HomeFragment.OnFragmentInteractionListener,
@@ -19,8 +27,9 @@ public class MainActivity extends AppCompatActivity
         AddFragment.OnFragmentInteractionListener{
     String username = "";
     static final int REGISTER_REQUEST_CODE = 1;
-    TextView status;
+    TextView text;
     Button button;
+    RecordViewModel mRecordViewModel;
 
     ViewPager viewPager;
     ViewPageAdapter viewPagerAdapter;
@@ -36,8 +45,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //status = (TextView) findViewById(R.id.textview);
-        //button = (Button) findViewById(R.id.testbutton);
         viewPager= (ViewPager)findViewById(R.id.viewPager);
         if(viewPager!=null){
             viewPagerAdapter=new ViewPageAdapter(getSupportFragmentManager());
@@ -62,23 +69,41 @@ public class MainActivity extends AppCompatActivity
             addFragment = (AddFragment)getSupportFragmentManager().getFragment(savedInstanceState,"addFragment");
             settingsFragment = (SettingsFragment)getSupportFragmentManager().getFragment(savedInstanceState, "settingsFragment");
         }
+      
+       text = findViewById(R.id.textView2);
+        mRecordViewModel = ViewModelProviders.of(this).get(RecordViewModel.class);
+        mRecordViewModel.getAllRecords().observe(this, new Observer<List<Record>>() {
+            @Override
+            public void onChanged(@Nullable final List<Record> words) {
+                // Update the cached copy of the words in the adapter.
+                Record[] foo2 = new Record[10];
+               Record[] foo =(Record[]) words.toArray(foo2);
+               String records="";
+               for(Record r: foo){
+                   if(r!=null) {
+                       records += "Name: " + r.getName() + " $:" + r.getAmount() + "\n";
+                   }
+               }
+               text.setText(records);
+            }
+        });
     }
+    
     public void startlogin(View view) {
 
         Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivityForResult(loginIntent, REGISTER_REQUEST_CODE);
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REGISTER_REQUEST_CODE && resultCode == RESULT_OK) {
-            username = data.getExtras().getString("Username");
-
-            Toast.makeText(this, "Welcome " + username, Toast.LENGTH_SHORT).show();
-            status.setText(username);
+         private void showEditDialog() {
+            FragmentManager fm = getSupportFragmentManager();
+            SubmitDialogFragment submitDialogFragment = SubmitDialogFragment.newInstance("Some Title");
+            submitDialogFragment.show(fm, "fragment_edit_name");
         }
+
+
+
     }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {

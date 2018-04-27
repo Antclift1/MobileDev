@@ -1,9 +1,11 @@
 package com.example.anthony.financialtracking;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 /**
  * Created by Keegan on 4/20/2018.
@@ -14,7 +16,7 @@ import android.content.Context;
  * TODO Add versioning and migration
  *
  */
-@Database(entities = {Record.class}, version = 1)
+@Database(entities = {Record.class}, version = 1, exportSchema = false)
 public abstract class RecordRoomDatabase extends RoomDatabase {
 
     //Make the database a singleton
@@ -46,4 +48,6 @@ public abstract class RecordRoomDatabase extends RoomDatabase {
      * @return the Dao
      */
     public abstract RecordDao recordDao();
+
+
 }

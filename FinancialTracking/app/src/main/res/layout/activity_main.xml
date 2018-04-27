@@ -15,4 +15,11 @@
             android:paddingBottom="10dp"
             android:paddingTop="10dp" />
     </android.support.v4.view.ViewPager>
+
+TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+       />
 </RelativeLayout>
