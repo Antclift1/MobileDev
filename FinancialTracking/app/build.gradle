@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-repositories{
+repositories {
     maven { url "https://jitpack.io" }
 }
 
@@ -31,7 +31,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.github.BlacKCaT27:CurrencyEditText:2.0.2'
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
-
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:1.1.1"

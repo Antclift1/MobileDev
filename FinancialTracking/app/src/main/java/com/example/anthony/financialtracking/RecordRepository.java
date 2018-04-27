@@ -3,8 +3,13 @@ package com.example.anthony.financialtracking;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.ArrayAdapter;
 
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Keegan on 4/20/2018.
@@ -66,6 +71,16 @@ public class RecordRepository {
     }
 
     /**
+     * clears the database of all entries
+     */
+    public void clearDatabase(){ new clearDbAsyncTask(mRecordDao).execute();}
+
+    /**
+     * Adds 30 randomonly generated records to the database
+     */
+    public void populateDatabase(String[] foo){ new populateDbAsync(mRecordDao).execute(foo);}
+
+    /**
      * Contains the code to create the asynctask to insert a new record into the database
      * Creates the task, and runs the insert in the background
      */
@@ -80,6 +95,42 @@ public class RecordRepository {
         @Override
         protected Void doInBackground(final Record... params) {
             mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class clearDbAsyncTask extends AsyncTask<Void, Void, Void> {
+        private RecordDao mAsyncTaskDao;
+
+        clearDbAsyncTask(RecordDao dao) {mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskDao.deleteAll();
+            return null;
+        }
+    }
+
+    private static class populateDbAsync extends AsyncTask<String[], Void, Void> {
+        private RecordDao mAsyncTaskDao;
+        Random r = new Random();
+
+        populateDbAsync(RecordDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final String[]... params) {
+            String[] types = params[0];
+            for(int i=0; i<30; i++){
+                String name = "RecordGen" + i;
+                String type = types[r.nextInt(types.length)];
+                double amount = r.nextInt(100000)/100;
+                Record rec = new Record(name, amount, type);
+                rec.setTimestamp(rec.getTimestamp()- ThreadLocalRandom.current().nextLong(TimeUnit.DAYS.toMillis(7)));
+                mAsyncTaskDao.insert(rec);
+            }
             return null;
         }
     }

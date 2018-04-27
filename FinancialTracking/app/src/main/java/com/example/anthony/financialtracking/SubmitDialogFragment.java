@@ -75,6 +75,8 @@ public class SubmitDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 makeRecordFromForm();
+                getDialog().dismiss();
+
             }
         });
 

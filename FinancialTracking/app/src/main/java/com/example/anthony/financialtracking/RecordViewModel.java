@@ -13,6 +13,7 @@ import java.util.List;
 public class RecordViewModel extends AndroidViewModel {
     private RecordRepository mRepository;
     private LiveData<List<Record>> mAllRecords;
+    private String[] types;
 
 
     public RecordViewModel(Application application) {
@@ -27,5 +28,17 @@ public class RecordViewModel extends AndroidViewModel {
 
     public void insert(Record record) {
         mRepository.insert(record);
+    }
+
+    public void clearDatabase(){
+        mRepository.clearDatabase();
+    }
+
+    public void populateDatabase(){
+        mRepository.populateDatabase(types);
+    }
+
+    public void setTypes(String[] foo){
+        types=foo;
     }
 }
