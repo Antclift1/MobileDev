@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Weekly Summary"
+                android:textSize="30dp" />
+            <!--The random text in Phase 2 summary!-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Random Text goes here"
+                android:textSize="15dp" />
+            <!--Table, will have rows for all the added expenses!-->
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/expenseTable">
+                <TableRow>
+                    <TextView android:text="Category"
+                        android:textSize="20dp"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:text="Amount"
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        android:gravity="center"/>
+                    <TextView
+                        android:text="Graph"
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        android:gravity="center"/>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

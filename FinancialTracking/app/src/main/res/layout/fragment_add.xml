@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--The X box in the wireframe!-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:src="@drawable/temppic" />
+
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow>
+                <Spinner
+                    android:id="@+id/expenseType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:id="@+id/nameLabel"
+                    android:text="Name/Label"
+                    android:textSize="15dp"
+                    android:layout_weight="1"/>
+            </TableRow>
+            <TableRow
+
+                android:gravity="right">
+
+                <EditText
+                    android:id="@+id/amount"
+                    android:text="Amount"
+                    android:textSize="15dp"
+                    android:layout_weight=""/>
+            </TableRow>
+
+            <Button
+                android:id="@+id/submit"
+                android:gravity="center"
+                android:text="Submit"
+                android:textSize="15dp" />
+        </TableLayout>
+    </LinearLayout>
+
+</RelativeLayout>
