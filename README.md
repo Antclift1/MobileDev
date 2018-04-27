@@ -26,3 +26,11 @@ Ongoing
 2. !!!TESTING!!!
 3. Creating interfaces/documentation for methods, ect
 4. Link front end and back end
+
+
+Links to documentation/3rd party libraries used
+---------------------------------------------------
+Google Room (database) - https://developer.android.com/topic/libraries/architecture/room
+Currency edit text - https://github.com/BlacKCaT27/CurrencyEditText
+Dialog fragments - https://guides.codepath.com/android/using-dialogfragment#modal-bottom-sheets
+Database-debugging - https://github.com/amitshekhariitbhu/Android-Debug-Database
