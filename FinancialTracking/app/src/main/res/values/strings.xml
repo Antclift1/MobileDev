@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Financial Tracking</string>
+    <string-array name="expenseType">
+        <item>Food</item>
+        <item>Rent</item>
+        <item>Utility</item>
+        <item>Clothes</item>
+    </string-array>
 </resources>
