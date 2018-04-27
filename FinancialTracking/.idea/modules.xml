@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/FinancialTracking.iml" filepath="$PROJECT_DIR$/.idea/FinancialTracking.iml" />
       <module fileurl="file://$PROJECT_DIR$/FinancialTracking.iml" filepath="$PROJECT_DIR$/FinancialTracking.iml" />
+      <module fileurl="file://C:\Users\Keegan\AndroidStudioProjects\MobileDev\FinancialTracking\.idea\FinancialTracking.iml" filepath="C:\Users\Keegan\AndroidStudioProjects\MobileDev\FinancialTracking\.idea\FinancialTracking.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

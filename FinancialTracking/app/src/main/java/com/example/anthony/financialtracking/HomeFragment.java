@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        randomText = (TextView)view.findViewById(R.id.randomText);
+        //randomText = (TextView)view.findViewById(R.id.randomText);
         expenseTable = (TableLayout)view.findViewById(R.id.expenseTable);
         return view;
     }

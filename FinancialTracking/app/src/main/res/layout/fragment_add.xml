@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <!--The X box in the wireframe!-->
+        <!--
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="200dp"
@@ -50,7 +51,7 @@
                 android:gravity="center"
                 android:text="Submit"
                 android:textSize="15dp" />
-        </TableLayout>
+        </TableLayout>-->
     </LinearLayout>
 
 </RelativeLayout>
