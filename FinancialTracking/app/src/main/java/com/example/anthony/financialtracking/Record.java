@@ -15,7 +15,7 @@ import android.support.annotation.NonNull;
 
 //
 @Entity(tableName = "Record")
-public class Record {
+public class Record implements Comparable<Record>{
     //Auto-generated id for this record: primary key
     @PrimaryKey(autoGenerate = true)
     private int r_id;
@@ -90,5 +90,16 @@ public class Record {
 
     public void setTimestamp(@NonNull long timestamp) {
         this.timestamp = timestamp;
+    }
+
+
+    public int compareTo(Record r) {
+        if(this.getTimestamp() > r.getTimestamp()){
+            return 1;
+        }
+        else if(this.getTimestamp() < r.getTimestamp()){
+            return -1;
+        }
+        else return 0;
     }
 }

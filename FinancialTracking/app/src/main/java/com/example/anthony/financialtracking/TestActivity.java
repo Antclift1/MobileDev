@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
+
 import java.util.List;
 
 /**
@@ -17,8 +20,9 @@ import java.util.List;
  */
 public class TestActivity extends AppCompatActivity {
     TextView text;
-    Button add, clear, populate;
+    Button add, clear, populate, pie;
     RecordViewModel mRecordViewModel;
+    LineChart chart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +31,6 @@ public class TestActivity extends AppCompatActivity {
         text = findViewById(R.id.textView2);
 
         mRecordViewModel = ViewModelProviders.of(this).get(RecordViewModel.class);
-        mRecordViewModel.setTypes(getResources().getStringArray(R.array.record_types));
         mRecordViewModel.getAllRecords().observe(this, new Observer<List<Record>>() {
             @Override
             public void onChanged(@Nullable final List<Record> words) {
@@ -43,6 +46,7 @@ public class TestActivity extends AppCompatActivity {
                 text.setText(records);
             }
         });
+
 
         add = findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +67,15 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mRecordViewModel.populateDatabase();
+            }
+        });
+        chart = findViewById(R.id.testLine);
+        pie = findViewById(R.id.makeTestPie);
+        pie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRecordViewModel.makeLineChart(chart, 7);
+
             }
         });
     }

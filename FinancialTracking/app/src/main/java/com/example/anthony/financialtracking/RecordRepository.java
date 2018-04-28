@@ -126,7 +126,7 @@ public class RecordRepository {
             for(int i=0; i<30; i++){
                 String name = "RecordGen" + i;
                 String type = types[r.nextInt(types.length)];
-                double amount = r.nextInt(100000)/100;
+                double amount = ((double)r.nextInt(100000))/100;
                 Record rec = new Record(name, amount, type);
                 rec.setTimestamp(rec.getTimestamp()- ThreadLocalRandom.current().nextLong(TimeUnit.DAYS.toMillis(7)));
                 mAsyncTaskDao.insert(rec);
