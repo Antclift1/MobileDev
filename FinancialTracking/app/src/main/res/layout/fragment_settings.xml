@@ -13,8 +13,9 @@
         <ImageView
             android:id="@+id/profilePicture"
             android:layout_width="wrap_content"
-            android:layout_height="150dp"/>
-            <!--android:src="@drawable/temppic"-->
+            android:layout_height="150dp"
+            android:src="@drawable/temppic"/>
+
 
         <TextView
             android:id="@+id/name"
