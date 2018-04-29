@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddFragment">
+    tools:context=".SubmitRecordFragment">
 
 
     <LinearLayout
@@ -13,45 +13,40 @@
         <!--The X box in the wireframe!-->
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:src="@drawable/temppic" />
-
-
-        <TableLayout
+            android:id="@+id/submit_icon"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="200dp"/>
+            <!--android:src="@drawable/temppic"-->
 
-            <TableRow>
-                <Spinner
-                    android:id="@+id/expenseType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+        <Spinner
+            android:id="@+id/submit_record_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-                <EditText
-                    android:id="@+id/nameLabel"
-                    android:text="Name/Label"
-                    android:textSize="15dp"
-                    android:layout_weight="1"/>
-            </TableRow>
-            <TableRow
+        <EditText
+            android:id="@+id/submit_record_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name" />
 
-                android:gravity="right">
+        <com.blackcat.currencyedittext.CurrencyEditText
+            android:id="@+id/submit_record_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal" />
 
-                <EditText
-                    android:id="@+id/amount"
-                    android:text="Amount"
-                    android:textSize="15dp"
-                    android:layout_weight=""/>
-            </TableRow>
-
-            <Button
-                android:id="@+id/submit"
-                android:gravity="center"
-                android:text="Submit"
-                android:textSize="15dp" />
-        </TableLayout>
+        <Button
+            android:id="@+id/submit_record_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Submit" />
     </LinearLayout>
 
 </RelativeLayout>

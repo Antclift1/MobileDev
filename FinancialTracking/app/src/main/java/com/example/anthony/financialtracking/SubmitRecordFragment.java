@@ -1,5 +1,6 @@
 package com.example.anthony.financialtracking;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,21 +9,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.blackcat.currencyedittext.CurrencyEditText;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AddFragment.OnFragmentInteractionListener} interface
+ * {@link SubmitRecordFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class AddFragment extends Fragment {
+public class SubmitRecordFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    Spinner typeSpinner;
+    private ImageView submitIcon;
+    private Spinner recordType;
+    private EditText recordName;
+    private CurrencyEditText recordAmount;
+    private Button submit;
+    private RecordViewModel mRecordViewModel;
 
-    public AddFragment() {
+
+    public SubmitRecordFragment() {
         // Required empty public constructor
     }
 
@@ -31,25 +44,57 @@ public class AddFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
-        /*
-        typeSpinner = (Spinner) view.findViewById(R.id.expenseType);
-        // Create an ArrayAdapter using the string array and a default spinner layout
+        submitIcon = view.findViewById(R.id.submit_icon);
+        //Get spinner
+        recordType = (Spinner) view.findViewById(R.id.submit_record_type);
+        recordName = (EditText) view.findViewById(R.id.submit_record_name);
+        // Get text enter for amount
+        recordAmount = (CurrencyEditText) view.findViewById(R.id.submit_record_amount);
+        // Get field from view
+        submit = (Button) view.findViewById(R.id.submit_record_button);
+
+        //Sets spinner content from strings.xml
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.record_types, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        typeSpinner.setAdapter(adapter);
-        */
+        recordType.setAdapter(adapter);
+
+        //Get record view model
+        mRecordViewModel = ViewModelProviders.of(this).get(RecordViewModel.class);
+
+        //On click listener for submit record button
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeRecordFromForm();
+                Toast.makeText(getContext(), "Record Submited", Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    /**
+     * This creates a record by pulling the data from the form, and then submits the record to the
+     * database
+     */
+    private void makeRecordFromForm(){
+        String type = recordType.getSelectedItem().toString();
+        String name = recordName.getText().toString();
+        long amount_in_cents = recordAmount.getRawValue();
+        double amount_decimal = (double) amount_in_cents/100;
+        Record record = new Record(name, amount_decimal, type);
+        mRecordViewModel.insert(record);
+        clearForm();
     }
+
+    public void clearForm(){
+        recordType.setSelection(0);
+        recordName.setText("Name");
+        recordAmount.setValue(0);
+    }
+
 
     @Override
     public void onAttach(Context context) {

@@ -99,6 +99,9 @@ public class ChartMaker {
                 //add to entry list at same index as type string
                 type_lists.get(index).add(new Entry(timeRelative, (float) sums[index]));
             }
+            else{
+                break;
+            }
         }
         //Set up the line data set
         List<ILineDataSet> data_sets = new ArrayList<>();

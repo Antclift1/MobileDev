@@ -29,8 +29,8 @@ public class ViewPageAdapter extends FragmentPagerAdapter {
             return homeFragment;
         }
         else if (position==1){
-            AddFragment addFragment = new AddFragment();
-            return addFragment;
+            SubmitRecordFragment submitRecordFragment = new SubmitRecordFragment();
+            return submitRecordFragment;
         }
         else{
             SettingsFragment settingsFragment = new SettingsFragment();

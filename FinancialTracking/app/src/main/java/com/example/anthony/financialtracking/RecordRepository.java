@@ -123,6 +123,7 @@ public class RecordRepository {
         @Override
         protected Void doInBackground(final String[]... params) {
             String[] types = params[0];
+            mAsyncTaskDao.deleteAll();
             for(int i=0; i<30; i++){
                 String name = "RecordGen" + i;
                 String type = types[r.nextInt(types.length)];
@@ -130,6 +131,7 @@ public class RecordRepository {
                 Record rec = new Record(name, amount, type);
                 rec.setTimestamp(rec.getTimestamp()- ThreadLocalRandom.current().nextLong(TimeUnit.DAYS.toMillis(7)));
                 mAsyncTaskDao.insert(rec);
+
             }
             return null;
         }

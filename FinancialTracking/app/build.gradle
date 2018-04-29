@@ -31,7 +31,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.github.BlacKCaT27:CurrencyEditText:2.0.2'
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
-
+    implementation 'com.android.support:design:27.1.0';
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
     // ViewModel and LiveData
