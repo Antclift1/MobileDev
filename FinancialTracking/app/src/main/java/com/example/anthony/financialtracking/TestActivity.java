@@ -49,12 +49,6 @@ public class TestActivity extends AppCompatActivity {
 
 
         add = findViewById(R.id.add);
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showEditDialog();
-            }
-        });
         clear = findViewById(R.id.clear);
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,11 +72,5 @@ public class TestActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void showEditDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        SubmitDialogFragment submitDialogFragment = SubmitDialogFragment.newInstance("Some Title");
-        submitDialogFragment.show(fm, "fragment_edit_name");
     }
 }

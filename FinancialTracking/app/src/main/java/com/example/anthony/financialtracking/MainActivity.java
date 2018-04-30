@@ -80,15 +80,6 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(loginIntent, REGISTER_REQUEST_CODE);
     }
 
-    /**
-     * Pops up a dialog to add a record, might not be needed
-     */
-    private void showEditDialog() {
-            FragmentManager fm = getSupportFragmentManager();
-            SubmitDialogFragment submitDialogFragment = SubmitDialogFragment.newInstance("Some Title");
-            submitDialogFragment.show(fm, "fragment_edit_name");
-
-    }
 
     @Override
     public void onFragmentInteraction(Uri uri) {

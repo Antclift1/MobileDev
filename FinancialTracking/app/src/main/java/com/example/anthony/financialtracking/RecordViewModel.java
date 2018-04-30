@@ -38,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 public class RecordViewModel extends AndroidViewModel {
     private RecordRepository mRepository;
     private String[] types;
+    private LiveData<List<Record>> liveData;
     //TODO fix this
     private Context context;
     private ChartMaker maker;
@@ -48,11 +49,12 @@ public class RecordViewModel extends AndroidViewModel {
         context = application.getApplicationContext();
         mRepository = new RecordRepository(application);
         types = context.getResources().getStringArray(R.array.record_types);
+        liveData =  mRepository.getAllRecords();
         maker = new ChartMaker(this);
     }
 
     LiveData<List<Record>> getAllRecords() {
-        return mRepository.getAllRecords();
+        return liveData;
     }
 
     public void insert(Record record) {
@@ -75,6 +77,15 @@ public class RecordViewModel extends AndroidViewModel {
         maker.makePieChart(pie);
     }
 
+    public int countRecords(){
+        List<Record> list = liveData.getValue();
+        if(list != null){
+            return list.size();
+        }
+        return 0;
+
+    }
+
 
     public String[] getTypes() {
         return types;
@@ -94,7 +105,7 @@ public class RecordViewModel extends AndroidViewModel {
         double[] sums = new double[types.length + 1];
         java.util.Arrays.fill(sums, 0);
         //get the records
-        List<Record> records_list = mRepository.getAllRecords().getValue();
+        List<Record> records_list = liveData.getValue();
         //sort the records
         if (records_list == null) {
             java.util.Arrays.fill(sums, -1);
@@ -132,7 +143,7 @@ public class RecordViewModel extends AndroidViewModel {
     }
 
     public void setUpTest(){
-        List<Record> records_list = mRepository.getAllRecords().getValue();
+        List<Record> records_list = liveData.getValue();
         //sort the records
         if (records_list == null || records_list.isEmpty()) {
             populateDatabase();

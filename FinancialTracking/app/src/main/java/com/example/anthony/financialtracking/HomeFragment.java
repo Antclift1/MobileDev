@@ -11,13 +11,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.List;
 
 
@@ -32,12 +33,15 @@ public class HomeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private TextView panel1Days;
-    private TextView panel1Amount;
-    private TextView panel3Text;
+    TextView panel2Dollars;
+    TextView panel2Cents;
     private PieChart panelPie;
     private RecordViewModel mRecordViewModel;
     private double[] record_sums;
     private LiveData<List<Record>> records;
+    //Hidden panel that is displayed when no records exist
+    private LinearLayout hiddenPanel;
+    private LinearLayout overviewContent;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -49,36 +53,69 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        //Get all the ids and shit
         mRecordViewModel = ViewModelProviders.of(this).get(RecordViewModel.class);
         panel1Days= view.findViewById(R.id.panel_1_days);
-        panel1Amount= view.findViewById(R.id.panel_1_amount);
-        panel3Text= view.findViewById(R.id.panel_3_text);
-        panelPie= view.findViewById(R.id.panel_2_pie);
+        panel2Dollars = view.findViewById(R.id.panel_2_dollars);
+        panel2Cents = view.findViewById(R.id.panel_2_cents);
+
+        panelPie= view.findViewById(R.id.home_pieChart);
+        hiddenPanel = view.findViewById(R.id.no_records_panel);
+        overviewContent = view.findViewById(R.id.overview_wrapper);
+
         records = mRecordViewModel.getAllRecords();
+        //onChange runs when the dataset changes
         final Observer<List<Record>> recordObserver = new Observer<List<Record>>() {
             @Override
             public void onChanged(@Nullable final List<Record> newData) {
                 // Update the UI, in this case, a TextView.
-                setTexts();
-                setGraph();
+                draw();
             }
         };
+
+        //Adds the observer
         records.observe(this, recordObserver);
-        mRecordViewModel.setUpTest();
+        //TODO remove after testing
+        //Popualtes the database with 30 random entries.
+        //mRecordViewModel.setUpTest();
+        draw();
         return view;
     }
 
+    /**
+     * Sets all the info in the panels on the home screen. Splitting it up to make future dev easier
+     * if no reccords, show the hidden panel
+     */
+    private void draw(){
+        //If we have records, hide the no records panel and show content panel
+        if(mRecordViewModel.countRecords() > 0) {
+            overviewContent.setVisibility(LinearLayout.VISIBLE);
+            hiddenPanel.setVisibility(LinearLayout.GONE);
+            setTexts();
+            setGraph();
+
+        }else {
+            //No records: show no records panels and hide content
+            overviewContent.setVisibility(LinearLayout.GONE);
+            hiddenPanel.setVisibility(LinearLayout.VISIBLE);
+        }
+    }
     private void setTexts(){
-        //TODO change summary by day input
-        record_sums = mRecordViewModel.getSums(-1);
-        Double amount = BigDecimal.valueOf(record_sums[record_sums.length-1])
-                .setScale(3, RoundingMode.HALF_UP)
-                .doubleValue();
-        String s= "You have spent: "+amount;
-        panel1Amount.setText(s);
+            //TODO change summary by day input
+            record_sums = mRecordViewModel.getSums(-1);
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        String s = formatter.format(record_sums[record_sums.length - 1]);
+        String dollars = s.substring(0, s.length()-3);
+        String cents = s.substring(s.length()-3, s.length());
+        panel2Dollars.setText(dollars);
+        panel2Cents.setText(cents);
+
+
+
     }
 
     private void setGraph(){
+
         mRecordViewModel.makePieChart(panelPie);
     }
 

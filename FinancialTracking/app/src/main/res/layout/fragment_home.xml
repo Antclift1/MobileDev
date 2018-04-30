@@ -1,65 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".HomeFragment">
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:padding="20dp"
-        android:background="#d7ccc8">
+        android:gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:padding="0pt"
+        android:fillViewport="true"
+        tools:context=".HomeFragment">
 
         <LinearLayout
+            android:id="@+id/content_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="20dp"
+            android:layout_marginBottom="0dp"
+            android:paddingBottom="20pt"
+            >
+
+        <LinearLayout
+            android:id="@+id/no_records_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="#ffffff"
+            android:elevation="10dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/no_records_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No records to show :("/>
+
+            <ImageView
+                android:id="@+id/no_records_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/overview_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
             >
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
                 android:id="@+id/panel_1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="15dp"
                 android:background="#ffffff"
-                android:elevation="2dp">
+                android:elevation="5dp"
+                android:layout_gravity="center"
+                android:includeFontPadding="false"
+                >
+
+                <TextView
+                    android:id="@+id/panel_1_text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Over the\npast"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:fontFamily="sans-serif"
+                    android:gravity="right"
+                    android:textStyle="bold"
+                    android:textSize="12pt"
+                    />
 
                 <TextView
                     android:id="@+id/panel_1_days"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Over the past 7 days:"/>
+                    android:fontFamily="sans-serif"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="0pt"
+                    android:text="7"
+                    android:textSize="60pt"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                     />
 
                 <TextView
-                    android:id="@+id/panel_1_amount"
-                    android:layout_width="match_parent"
+                    android:id="@+id/panel_1_text2"
+                    android:text="days"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="You have spent:"/>
-            </LinearLayout>
+                    app:layout_constraintBaseline_toBaselineOf="@+id/panel_1_days"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:textStyle="bold"
+                    android:textSize="12pt"/>
+            </android.support.constraint.ConstraintLayout>
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
                 android:id="@+id/panel_2"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="#ffffff">
+                android:layout_marginBottom="15dp"
+                android:background="#ffffff"
+                android:elevation="5dp"
+                android:layout_gravity="center"
+                android:includeFontPadding="false"
+                >
+
+                <TextView
+                    android:id="@+id/panel_2_text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="You've spent:"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:fontFamily="sans-serif"
+                    android:gravity="right"
+                    android:textStyle="bold"
+                    android:textSize="12pt"
+                    />
+
+                <TextView
+                    android:id="@+id/panel_2_dollars"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/panel_2_text1"
+                    app:layout_constraintRight_toLeftOf="@+id/panel_2_cents"
+                    android:fontFamily="sans-serif"
+                    android:text="$0"
+                    android:textSize="30pt"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/panel_2_cents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=".00"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/panel_2_dollars"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:textStyle="bold"
+                    android:textSize="12pt"/>
+            </android.support.constraint.ConstraintLayout>
+
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/panel_graph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp"
+                android:background="#ffffff"
+                android:elevation="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:fontFamily="sans-serif"
+                    android:text="On:"
+                    android:textSize="30pt"
+                    android:textStyle="bold"
+                    />
 
                 <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/panel_2_pie"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp">
+                    android:id="@+id/home_pieChart"
+                    android:layout_height="300dp"
+                    android:layout_width="fill_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
                 </com.github.mikephil.charting.charts.PieChart>
-            </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
 
             <LinearLayout
                 android:id="@+id/panel_3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:background="#ffffff">
+                android:layout_marginBottom="10dp"
+                android:background="#ffffff"
+                android:elevation="5dp">
 
                 <TextView
                     android:id="@+id/panel_3_text"
@@ -68,5 +196,5 @@
                     android:text="By category:"/>
             </LinearLayout>
         </LinearLayout>
+        </LinearLayout>
     </ScrollView>
-</RelativeLayout>

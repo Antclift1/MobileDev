@@ -4,9 +4,11 @@ import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.graphics.Color;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -16,6 +18,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.text.DecimalFormat;
@@ -61,9 +64,27 @@ public class ChartMaker {
         int[]colors = context.getResources().getIntArray(R.array.rainbow);
         set.setColors(colors);
         PieData data = new PieData(set);
+        data.setValueFormatter(new PercentFormatter());
+        data.setValueTextSize(12f);
         pie.setData(data);
+        pie.getDescription().setEnabled(false);
+        pie.setRotationEnabled(false);
+        pie.setHighlightPerTapEnabled(true);
+
+        pie.setMaxAngle(270f); // HALF CHART
+        pie.setRotationAngle(315f);
+
+        pie.getLegend().setEnabled(false);
+        pie.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+
+        // entry label styling
+        pie.setExtraOffsets(5, 10, 5, 5);
+        pie.setEntryLabelTextSize(12f);
+
         pie.setUsePercentValues(true);
-        pie.setCenterText("Expenses by Type");
+
+
+
         pie.invalidate();
     }
 
