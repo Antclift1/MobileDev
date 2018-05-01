@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,15 +36,17 @@ public class HomeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private TextView panel1Days;
-    TextView panel2Dollars;
-    TextView panel2Cents;
+    private TextView panel2Dollars;
+    private TextView panel2Cents;
     private PieChart panelPie;
     private RecordViewModel mRecordViewModel;
     private double[] record_sums;
     private LiveData<List<Record>> records;
+    private Button viewRecords;
     //Hidden panel that is displayed when no records exist
     private LinearLayout hiddenPanel;
     private LinearLayout overviewContent;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -58,6 +63,13 @@ public class HomeFragment extends Fragment {
         panel1Days= view.findViewById(R.id.panel_1_days);
         panel2Dollars = view.findViewById(R.id.panel_2_dollars);
         panel2Cents = view.findViewById(R.id.panel_2_cents);
+        viewRecords = view.findViewById(R.id.viewRecords);
+        viewRecords.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchRecordView();
+            }
+        });
 
         panelPie= view.findViewById(R.id.home_pieChart);
         hiddenPanel = view.findViewById(R.id.no_records_panel);
@@ -150,6 +162,11 @@ public class HomeFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void launchRecordView(){
+        Intent intent = new Intent(this.getContext(), ViewRecordsActivity.class);
+        startActivity(intent);
     }
 
 }
