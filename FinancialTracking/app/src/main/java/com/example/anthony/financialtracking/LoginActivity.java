@@ -71,4 +71,9 @@ public class LoginActivity extends Activity implements LoginResponse{
 
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Please login or create an account.", Toast.LENGTH_SHORT).show();
+    }
 }

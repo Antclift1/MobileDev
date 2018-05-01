@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.regex.Pattern;
+
 public class SignupActivity extends Activity implements LoginResponse{
 
 
@@ -38,13 +40,19 @@ public class SignupActivity extends Activity implements LoginResponse{
     //submit the signup information
     public void submit(View view){
         String username = usernameField.getText().toString();
-        if(passwordField.getText().toString() == passwordField2.getText().toString()) {
-            String password = passwordField.getText().toString();
-
-            new Signup(this).execute(username, password);
+        Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+        boolean usernameSpecialChar = p.matcher(username).find();
+        if(usernameSpecialChar){
+            Toast.makeText(this, "Username must be alphanumeric.", Toast.LENGTH_SHORT).show();
         }
         else {
-            Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
+            if (passwordField.getText().toString().equals(passwordField2.getText().toString()) ){
+                String password = passwordField.getText().toString();
+
+                new Signup(this).execute(username, password);
+            } else {
+                Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
+            }
         }
 
     }
