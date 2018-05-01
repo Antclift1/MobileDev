@@ -63,9 +63,11 @@ public class ChartMaker {
         PieDataSet set = new PieDataSet(entries, "Expenses");
         int[]colors = context.getResources().getIntArray(R.array.rainbow);
         set.setColors(colors);
+        set.setSliceSpace(5f);
         PieData data = new PieData(set);
         data.setValueFormatter(new PercentFormatter());
         data.setValueTextSize(12f);
+
         pie.setData(data);
         pie.getDescription().setEnabled(false);
         pie.setRotationEnabled(false);
@@ -80,6 +82,8 @@ public class ChartMaker {
         // entry label styling
         pie.setExtraOffsets(5, 10, 5, 5);
         pie.setEntryLabelTextSize(12f);
+        pie.setEntryLabelColor(0xff000000);
+
 
         pie.setUsePercentValues(true);
 
@@ -195,4 +199,6 @@ public class ChartMaker {
 
         public int getDecimalDigits() { return 0; }
     }
+
+
 }

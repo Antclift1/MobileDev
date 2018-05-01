@@ -166,6 +166,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     android:fontFamily="sans-serif"
+                    android:layout_marginTop="5dp"
                     android:text="On:"
                     android:textSize="30pt"
                     android:textStyle="bold"
@@ -180,21 +181,15 @@
                 </com.github.mikephil.charting.charts.PieChart>
             </android.support.constraint.ConstraintLayout>
 
-            <LinearLayout
-                android:id="@+id/panel_3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginBottom="10dp"
-                android:background="#ffffff"
-                android:elevation="5dp">
-
-                <TextView
-                    android:id="@+id/panel_3_text"
+                <Button
+                    android:id="@+id/viewRecords"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="By category:"/>
+                    android:text="See what you paid for"
+                    android:layout_marginBottom="10dp"
+                    android:background="#ffffff"
+                    android:elevation="5dp"
+                    />
             </LinearLayout>
-        </LinearLayout>
         </LinearLayout>
     </ScrollView>
