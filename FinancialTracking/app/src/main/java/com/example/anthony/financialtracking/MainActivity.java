@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         username = prefs.getString("username", "");
         if(username == ""){
-            startlogin();
+            //startlogin();
         }
         else {
             Toast.makeText(this, "Welcome " + username, Toast.LENGTH_SHORT).show();

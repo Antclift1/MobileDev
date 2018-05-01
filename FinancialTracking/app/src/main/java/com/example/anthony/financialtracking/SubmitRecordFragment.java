@@ -57,7 +57,7 @@ public class SubmitRecordFragment extends Fragment {
 
         //Sets spinner content from strings.xml
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
-                R.array.record_types, android.R.layout.simple_spinner_item);
+                R.array.record_types, R.layout.custom_spinner_layout);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner

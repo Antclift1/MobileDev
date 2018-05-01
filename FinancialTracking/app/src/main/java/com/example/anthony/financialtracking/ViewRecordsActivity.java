@@ -25,10 +25,7 @@ public class ViewRecordsActivity extends AppCompatActivity {
         // in content do not change the layout size of the RecyclerView
         mRecyclerView = findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mAdapter = new RecordAdapter(this);
-        mRecyclerView.setAdapter(mAdapter);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+
         mRecordViewModel = ViewModelProviders.of(this).get(RecordViewModel.class);
         mRecordViewModel.getAllRecords().observe(this, new Observer<List<Record>>() {
             @Override
@@ -37,6 +34,10 @@ public class ViewRecordsActivity extends AppCompatActivity {
                 ((RecordAdapter) mAdapter).setRecords(records);
             }
         });
+        mAdapter = new RecordAdapter(this, mRecordViewModel);
+        mRecyclerView.setAdapter(mAdapter);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
 

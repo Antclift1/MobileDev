@@ -75,6 +75,10 @@ public class RecordRepository {
      */
     public void clearDatabase(){ new clearDbAsyncTask(mRecordDao).execute();}
 
+    public void delete(Record record) {new deleteAsyncTask(mRecordDao).execute(record);}
+
+    public void update(Record record) {new updateAsyncTask(mRecordDao).execute(record);}
+
     /**
      * Adds 30 randomonly generated records to the database
      */
@@ -108,6 +112,32 @@ public class RecordRepository {
         @Override
         protected Void doInBackground(Void... voids) {
             mAsyncTaskDao.deleteAll();
+            return null;
+        }
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<Record, Void, Void> {
+        private RecordDao mAsyncTaskDao;
+
+        deleteAsyncTask(RecordDao dao) {mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Record... params) {
+            mAsyncTaskDao.delete(params[0]);
+            return null;
+        }
+    }
+
+    private static class updateAsyncTask extends AsyncTask<Record, Void, Void> {
+        private RecordDao mAsyncTaskDao;
+
+        updateAsyncTask(RecordDao dao) {mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Record... params) {
+            mAsyncTaskDao.update(params[0]);
             return null;
         }
     }
