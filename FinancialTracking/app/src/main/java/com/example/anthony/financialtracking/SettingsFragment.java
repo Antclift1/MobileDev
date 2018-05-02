@@ -3,7 +3,9 @@ package com.example.anthony.financialtracking;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -15,7 +17,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import static android.app.Activity.RESULT_OK;
+<<<<<<< HEAD
 
+=======
+import static com.example.anthony.financialtracking.SignupActivity.getUser;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+>>>>>>> 7da3b66f0439312ec857fbff9b168c201f1b6340
 
 
 /**
@@ -28,7 +46,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
     ImageView profilePicture;
+<<<<<<< HEAD
     //TextView name;
+=======
+    TextView name;
+    String username;
+    String[] userdata;
+>>>>>>> 7da3b66f0439312ec857fbff9b168c201f1b6340
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -41,7 +65,14 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         profilePicture = (ImageView)view.findViewById(R.id.profilePicture);
+<<<<<<< HEAD
         //name = (TextView)view.findViewById(R.id.name);
+=======
+        name = (TextView)view.findViewById(R.id.name);
+        username = ((MainActivity)getActivity()).getLogin();
+
+        name.setText(getUser());
+>>>>>>> 7da3b66f0439312ec857fbff9b168c201f1b6340
         if(savedInstanceState!=null){
             profileImageBitmap = savedInstanceState.getParcelable("BitmapImage");
             profilePicture.setImageBitmap(profileImageBitmap);
@@ -98,6 +129,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onAttach(Context context) {
+        GetProfile getProfile = new GetProfile();
+        getProfile.execute(username);
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
@@ -137,5 +170,58 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     public void logout(View view){
         ((MainActivity)getActivity()).logout(view);
+    }
+
+    public void updateBudget(View view){
+        ((MainActivity)getActivity()).updateBudget(view);
+    }
+
+
+    public class GetProfile extends AsyncTask<String, String, Void> {
+
+        @Override
+        protected Void doInBackground(String... arg0) {
+            try {
+                username = arg0[0];
+                String link = "http://ec2-18-216-10-60.us-east-2.compute.amazonaws.com/MobileDev/getProfile.php";
+                String data = URLEncoder.encode("username", "UTF-8") + "=" +
+                        URLEncoder.encode(username, "UTF-8");
+
+                URL url = new URL(link);
+                URLConnection conn = url.openConnection();
+
+                conn.setDoOutput(true);
+                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+
+                wr.write(data);
+                wr.flush();
+
+                BufferedReader reader = new BufferedReader(new
+                        InputStreamReader(conn.getInputStream()));
+
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                // Read Server Response
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                    break;
+                }
+
+                JSONObject obj = new JSONObject(sb.toString());
+                name.setText(obj.getString("Lastname") + ", " + obj.getString("Firstname"));
+
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(Void aVoid){
+            super.onPostExecute(aVoid);
+            //nameField.setText("PostExecute");
+        }
     }
 }
