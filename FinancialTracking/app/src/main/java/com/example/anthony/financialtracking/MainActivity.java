@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
             submitRecordFragment = (SubmitRecordFragment)getSupportFragmentManager().getFragment(savedInstanceState,"submitRecordFragment");
             settingsFragment = (SettingsFragment)getSupportFragmentManager().getFragment(savedInstanceState, "settingsFragment");
         }
-
+        viewPager.setOffscreenPageLimit(2);
         // Sets up a tabLayout to navigate between screens
         TabLayout tabLayout = new TabLayout(this);
         tabLayout.setupWithViewPager(viewPager);
@@ -101,6 +101,13 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences settings = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         settings.edit().putString("username", "");
         startlogin();
+    }
+
+    public void updateBudget(View view) {
+
+        Intent budgetIntent = new Intent(this, BudgetUpdateActivity.class);
+        budgetIntent.putExtra("Username", username);
+        startActivity(budgetIntent);
     }
 
     @Override

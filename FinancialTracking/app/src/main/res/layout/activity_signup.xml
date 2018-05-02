@@ -54,10 +54,18 @@
                 android:id="@+id/SignupConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:ems="10"
                 android:hint="Confirm Password"
                 android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/SignupBudget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:hint="Budget"
+                android:inputType="number|numberDecimal" />
 
             <TextView
                 android:id="@+id/textView5"

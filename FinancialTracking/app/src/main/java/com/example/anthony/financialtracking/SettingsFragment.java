@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.anthony.financialtracking.SignupActivity.getUser;
+
 
 
 /**
@@ -28,7 +28,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
     ImageView profilePicture;
-    TextView name;
+    //TextView name;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -41,8 +41,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         profilePicture = (ImageView)view.findViewById(R.id.profilePicture);
-        name = (TextView)view.findViewById(R.id.name);
-        name.setText(getUser());
+        //name = (TextView)view.findViewById(R.id.name);
         if(savedInstanceState!=null){
             profileImageBitmap = savedInstanceState.getParcelable("BitmapImage");
             profilePicture.setImageBitmap(profileImageBitmap);
