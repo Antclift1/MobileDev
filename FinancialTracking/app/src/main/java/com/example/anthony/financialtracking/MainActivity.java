@@ -96,6 +96,10 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(loginIntent, REGISTER_REQUEST_CODE);
     }
 
+    public String getLogin() {
+        return username;
+    }
+
     public void logout(View view) {
         username = "";
         SharedPreferences settings = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);

@@ -58,7 +58,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         profilePicture = (ImageView)view.findViewById(R.id.profilePicture);
         name = (TextView)view.findViewById(R.id.name);
-        username = ((MainActivity)this.getActivity()).username;
+        username = ((MainActivity)getActivity()).getLogin();
 
         name.setText(getUser());
         if(savedInstanceState!=null){
@@ -118,7 +118,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onAttach(Context context) {
         GetProfile getProfile = new GetProfile();
-        getProfile.execute();
+        getProfile.execute(username);
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
@@ -197,15 +197,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 }
 
                 JSONObject obj = new JSONObject(sb.toString());
-                userdata = new String[10];
-                JSONArray jsonArray = obj.getJSONArray("userdata");
-                if (jsonArray != null) {
-                    int len = jsonArray.length();
-                    for (int i = 0; i < len; i++) {
-                        userdata[i] = (jsonArray.get(i).toString());
-                    }
-                }
-                name.setText(userdata[5] + ", " + userdata[4]);
+                name.setText(obj.getString("Lastname") + ", " + obj.getString("Firstname"));
 
             }catch (Exception ex) {
                 ex.printStackTrace();
