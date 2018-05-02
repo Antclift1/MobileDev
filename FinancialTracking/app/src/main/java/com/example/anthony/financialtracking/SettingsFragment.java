@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.anthony.financialtracking.SignupActivity.getUser;
 
 
 /**
@@ -40,8 +42,22 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         profilePicture = (ImageView)view.findViewById(R.id.profilePicture);
         name = (TextView)view.findViewById(R.id.name);
+        name.setText(getUser());
+        if(savedInstanceState!=null){
+            profileImageBitmap = savedInstanceState.getParcelable("BitmapImage");
+            profilePicture.setImageBitmap(profileImageBitmap);
+        }
         profilePicture.setOnClickListener(this);
         return view;
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(savedInstanceState!=null) {
+            profileImageBitmap = savedInstanceState.getParcelable("BitmapImage");
+            profilePicture.setImageBitmap(profileImageBitmap);
+        }
+
     }
     static final int REQUEST_IMAGE_CAPTURE = 1;
     protected void onTakePicture(View view){
@@ -63,6 +79,21 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
+        }
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putParcelable("BitmapImage", profileImageBitmap);
+
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if(savedInstanceState!=null) {
+            profileImageBitmap = savedInstanceState.getParcelable("BitmapImage");
+            profilePicture.setImageBitmap(profileImageBitmap);
         }
     }
 

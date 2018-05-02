@@ -21,7 +21,7 @@
                 android:layout_width="150dp"
                 android:layout_height="250dp"
                 android:layout_gravity="center"
-                android:src="@drawable/temppic" />
+                android:src="@drawable/camera" />
 
             <TextView
                 android:id="@+id/name"
