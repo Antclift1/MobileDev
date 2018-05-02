@@ -16,6 +16,14 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.List;
 
 
@@ -26,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     String username = "";
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     static final int REGISTER_REQUEST_CODE = 1;
+    JSONObject profileData;
 
     RecordViewModel mRecordViewModel;
 
@@ -58,6 +67,7 @@ public class MainActivity extends AppCompatActivity
         }
         else {
             Toast.makeText(this, "Welcome " + username, Toast.LENGTH_SHORT).show();
+            getUserData(username);
         }
         //Finds the fragments from the manager and sets the variables
         android.support.v4.app.FragmentManager fragmentManager=getSupportFragmentManager();
@@ -96,8 +106,8 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(loginIntent, REGISTER_REQUEST_CODE);
     }
 
-    public String getLogin() {
-        return username;
+    public JSONObject getLogin() {
+        return profileData;
     }
 
     public void logout(View view) {
@@ -121,8 +131,9 @@ public class MainActivity extends AppCompatActivity
             username = data.getExtras().getString("Username");
             SharedPreferences settings = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
             settings.edit().putString("username", username);
+            getUserData(username);
         }
-        Toast.makeText(this, username, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, username, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -130,5 +141,40 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    public void getUserData(String username) {
+        try {
+            String user = username;
+            String link = "http://ec2-18-216-10-60.us-east-2.compute.amazonaws.com/MobileDev/getProfile.php";
+            String data = URLEncoder.encode("username", "UTF-8") + "=" +
+                    URLEncoder.encode(user, "UTF-8");
+
+            URL url = new URL(link);
+            URLConnection conn = url.openConnection();
+
+            conn.setDoOutput(true);
+            OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+
+            wr.write(data);
+            wr.flush();
+
+            BufferedReader reader = new BufferedReader(new
+                    InputStreamReader(conn.getInputStream()));
+
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+
+            // Read Server Response
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+                break;
+            }
+
+            JSONObject obj = new JSONObject(sb.toString());
+            profileData =  obj;
+        }catch (Exception ex) {
+
+        }
     }
 }

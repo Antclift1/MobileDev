@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -44,7 +45,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     ImageView profilePicture;
     TextView name;
     String username;
-    String[] userdata;
+    JSONObject userdata;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -58,9 +59,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         profilePicture = (ImageView)view.findViewById(R.id.profilePicture);
         name = (TextView)view.findViewById(R.id.name);
-        username = ((MainActivity)getActivity()).getLogin();
+        userdata = ((MainActivity)getActivity()).profileData;
 
-        name.setText(getUser());
+        try {
+            name.setText(userdata.getString("Lastname") + ", " + userdata.getString("Firstname"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         if(savedInstanceState!=null){
             profileImageBitmap = savedInstanceState.getParcelable("BitmapImage");
             profilePicture.setImageBitmap(profileImageBitmap);
@@ -117,8 +122,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onAttach(Context context) {
-        GetProfile getProfile = new GetProfile();
-        getProfile.execute(username);
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
@@ -165,51 +168,5 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    public class GetProfile extends AsyncTask<String, String, Void> {
 
-        @Override
-        protected Void doInBackground(String... arg0) {
-            try {
-                username = arg0[0];
-                String link = "http://ec2-18-216-10-60.us-east-2.compute.amazonaws.com/MobileDev/getProfile.php";
-                String data = URLEncoder.encode("username", "UTF-8") + "=" +
-                        URLEncoder.encode(username, "UTF-8");
-
-                URL url = new URL(link);
-                URLConnection conn = url.openConnection();
-
-                conn.setDoOutput(true);
-                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-
-                wr.write(data);
-                wr.flush();
-
-                BufferedReader reader = new BufferedReader(new
-                        InputStreamReader(conn.getInputStream()));
-
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-
-                // Read Server Response
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line);
-                    break;
-                }
-
-                JSONObject obj = new JSONObject(sb.toString());
-                name.setText(obj.getString("Lastname") + ", " + obj.getString("Firstname"));
-
-            }catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(Void aVoid){
-            super.onPostExecute(aVoid);
-            //nameField.setText("PostExecute");
-        }
-    }
 }
