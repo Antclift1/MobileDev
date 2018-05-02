@@ -1,12 +1,19 @@
 package com.example.anthony.financialtracking;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -15,9 +22,11 @@ import android.view.ViewGroup;
  * {@link SettingsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
+    ImageView profilePicture;
+    TextView name;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -28,9 +37,28 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        profilePicture = (ImageView)view.findViewById(R.id.profilePicture);
+        name = (TextView)view.findViewById(R.id.name);
+        profilePicture.setOnClickListener(this);
+        return view;
     }
-
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    protected void onTakePicture(View view){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
+    }
+    Bitmap profileImageBitmap = null;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_IMAGE_CAPTURE&&
+                resultCode==RESULT_OK){
+            Bundle extras = data.getExtras();
+            profileImageBitmap=(Bitmap)extras.get("data");
+            profilePicture.setImageBitmap(profileImageBitmap);
+        }
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -53,6 +81,13 @@ public class SettingsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == profilePicture.getId()){
+            onTakePicture(view);
+        }
     }
 
     /**
