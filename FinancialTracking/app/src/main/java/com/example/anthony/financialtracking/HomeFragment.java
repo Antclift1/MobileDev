@@ -233,6 +233,7 @@ public class HomeFragment extends Fragment {
 
     private void launchRecordView(){
         Intent intent = new Intent(this.getContext(), ViewRecordsActivity.class);
+        intent.putExtra("days", days);
         startActivity(intent);
     }
 

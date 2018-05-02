@@ -26,6 +26,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -52,9 +53,6 @@ public class RecordViewModel extends AndroidViewModel {
         mRepository = new RecordRepository(application);
         types = context.getResources().getStringArray(R.array.record_types);
         liveData =  mRepository.getAllRecords();
-        long currentTime = System.currentTimeMillis();
-        long timeDaysAgo = currentTime - TimeUnit.DAYS.toMillis(7);
-        liveData7 = mRepository.getAllRecords(timeDaysAgo);
         maker = new ChartMaker(this);
     }
 
@@ -62,9 +60,6 @@ public class RecordViewModel extends AndroidViewModel {
         return liveData;
     }
 
-    LiveData<List<Record>> getAllRecords7() {
-        return liveData7;
-    }
 
     LiveData<List<Record>> getAllRecords(int days) {
         long currentTime = System.currentTimeMillis();
@@ -171,5 +166,43 @@ public class RecordViewModel extends AndroidViewModel {
 
     public Context getContext() {
         return context;
+    }
+
+    public long getOldest(){
+        List<Record> list = new ArrayList<>(liveData.getValue());
+        Collections.sort(list);
+        return list.get(0).getTimestamp();
+    }
+
+    public List<double[]> getSumsByWeek() {
+        long oldest = getOldest();
+        float weeks = oldest % TimeUnit.DAYS.toMillis(7);
+        // get today and clear time of day
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+        cal.clear(Calendar.MINUTE);
+        cal.clear(Calendar.SECOND);
+        cal.clear(Calendar.MILLISECOND);
+
+        // get start of this week in milliseconds
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+        long startOfWeek = cal.getTimeInMillis();
+        List<double[]> sumsAll = new ArrayList<>();
+
+        List<Record> list = new ArrayList<>(liveData.getValue());
+        for (long l = startOfWeek; l > oldest; l -= TimeUnit.DAYS.toMillis(7)) {
+            double[] sums = new double[types.length + 1];
+            for (Record current : list) {
+                if (current.getTimestamp() < startOfWeek && current.getTimestamp() > startOfWeek - TimeUnit.DAYS.toMillis(7)) {
+                    //sum up by type
+                    sums[getIndex(current.getType())] += current.getAmount();
+                    //sum up total
+                    sums[sums.length - 1] += current.getAmount();
+                }
+            }
+            sumsAll.add(sums);
+
+        }
+        return sumsAll;
     }
 }
