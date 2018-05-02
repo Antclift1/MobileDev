@@ -1,7 +1,5 @@
 package com.example.anthony.financialtracking;
 
-import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,6 +20,8 @@ import java.util.List;
 
 /**
  * Created by Keegan on 4/30/2018.
+ *
+ * Makes the view all records views from the record live data, by making recyler view holders
  */
 
 public class RecordAdapter extends
@@ -36,21 +35,21 @@ public class RecordAdapter extends
         public static class RecordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
             // each data item is just a string in this case
             public Record record;
-            public TextView mName;
-            public TextView mAmount;
-            public TextView mType;
-            public TextView mDate;
+            TextView mName;
+            TextView mAmount;
+            TextView mType;
+            TextView mDate;
 
 
             GridLayout edit;
-            public TextView mEditName;
-            public CurrencyEditText mEditAmount;
-            public Spinner mEditType;
-            public Button save;
-            public Button delete;
-            public RecordViewModel holderRecordViewModel;
+            TextView mEditName;
+            CurrencyEditText mEditAmount;
+            Spinner mEditType;
+            Button save;
+            Button delete;
+            RecordViewModel holderRecordViewModel;
 
-            public RecordViewHolder(View itemView, RecordViewModel recordViewModel)  {
+            RecordViewHolder(View itemView, RecordViewModel recordViewModel)  {
                 super(itemView);
                 holderRecordViewModel=recordViewModel;
                 itemView.setOnClickListener(this);
@@ -100,6 +99,7 @@ public class RecordAdapter extends
                             record.setAmount(amount_decimal);
                             record.setType(mEditType.getSelectedItem().toString());
                             holderRecordViewModel.update(record);
+                            edit.setVisibility(View.GONE);
                         }
                     });
 
@@ -122,7 +122,7 @@ public class RecordAdapter extends
 
 
         // Provide a suitable constructor (depends on the kind of dataset)
-    public RecordAdapter(Context context, RecordViewModel recordViewModel){
+    RecordAdapter(Context context, RecordViewModel recordViewModel){
         mInflater = LayoutInflater.from(context);
         mRecordViewModel = recordViewModel;
     }

@@ -1,6 +1,7 @@
 package com.example.anthony.financialtracking;
 
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.Toast;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
@@ -110,6 +113,7 @@ public class MainActivity extends AppCompatActivity
         }
         Toast.makeText(this, username, Toast.LENGTH_SHORT).show();
     }
+
 
 
     @Override

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.Transformations;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
@@ -39,6 +40,7 @@ public class RecordViewModel extends AndroidViewModel {
     private RecordRepository mRepository;
     private String[] types;
     private LiveData<List<Record>> liveData;
+    private LiveData<List<Record>> liveData7;
     //TODO fix this
     private Context context;
     private ChartMaker maker;
@@ -50,12 +52,26 @@ public class RecordViewModel extends AndroidViewModel {
         mRepository = new RecordRepository(application);
         types = context.getResources().getStringArray(R.array.record_types);
         liveData =  mRepository.getAllRecords();
+        long currentTime = System.currentTimeMillis();
+        long timeDaysAgo = currentTime - TimeUnit.DAYS.toMillis(7);
+        liveData7 = mRepository.getAllRecords(timeDaysAgo);
         maker = new ChartMaker(this);
     }
 
     LiveData<List<Record>> getAllRecords() {
         return liveData;
     }
+
+    LiveData<List<Record>> getAllRecords7() {
+        return liveData7;
+    }
+
+    LiveData<List<Record>> getAllRecords(int days) {
+        long currentTime = System.currentTimeMillis();
+        long timeDaysAgo = currentTime - TimeUnit.DAYS.toMillis(days);
+        return mRepository.getAllRecords(timeDaysAgo);
+    }
+
 
     public void insert(Record record) {
         mRepository.insert(record);
@@ -76,8 +92,8 @@ public class RecordViewModel extends AndroidViewModel {
         maker.makeLineChart(line, numDays);
     }
 
-    public void makePieChart(PieChart pie){
-        maker.makePieChart(pie);
+    public void makePieChart(PieChart pie, int days){
+        maker.makePieChart(pie, days);
     }
 
     public int countRecords(){

@@ -14,7 +14,8 @@
     android:padding="20dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".SubmitRecordFragment">
+    tools:context=".SubmitRecordFragment"
+    >
     <ImageView
         android:id="@+id/submit_icon"
         android:layout_width="match_parent"
@@ -45,6 +46,7 @@
             android:textSize="20pt"
             android:textStyle="bold"
             android:text="I paid:"
+            android:layout_columnWeight="1"
             android:layout_gravity="right"/>
 
         <com.blackcat.currencyedittext.CurrencyEditText
@@ -53,7 +55,9 @@
             android:layout_height="wrap_content"
             android:textSize="20pt"
             android:textStyle="bold"
+            android:hint="$0.00"
             android:inputType="numberDecimal"
+            android:layout_columnWeight="2"
             android:layout_gravity="left"/>
 
         <TextView
@@ -78,7 +82,7 @@
             android:layout_height="wrap_content"
             android:textSize="20pt"
             android:textStyle="bold"
-            android:text="Which is:"
+            android:text="It is:"
             android:layout_gravity="right"/>
 
         <Spinner

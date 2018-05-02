@@ -40,6 +40,7 @@ public class RecordRepository {
     //Live view of the data
     private LiveData<List<Record>> mAllRecords;
 
+
     /**
      * Constructor for the repository
      * Gets a handle to the database and inits vars
@@ -59,6 +60,13 @@ public class RecordRepository {
         return mAllRecords;
     }
 
+    /**
+     * Wrapper method for getAllRecords
+     * @return a LiveData containing a list of all the records with time stamp>time
+     */
+    LiveData<List<Record>> getAllRecords(long time) {return mRecordDao.getAllRecords(time);
+    }
+
 
     /**
      * This method inserts the record into the database
@@ -69,6 +77,7 @@ public class RecordRepository {
     public void insert (Record record) {
         new insertAsyncTask(mRecordDao).execute(record);
     }
+
 
     /**
      * clears the database of all entries
