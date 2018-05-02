@@ -30,18 +30,29 @@
             android:visibility="gone"
             android:background="#ffffff"
             android:elevation="10dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/submit_icon"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:src="@drawable/moneybag"
+                android:layout_marginTop="5pt"
+                android:layout_marginBottom="5pt"
+                android:padding="10pt"
+                android:background="@color/colorPrimary"
+                />
 
             <TextView
                 android:id="@+id/no_records_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="No records to show :("/>
+                android:textSize="30pt"
+                android:textStyle="bold"
+                android:text="No records to show :(\nSwipe right ->"/>
 
-            <ImageView
-                android:id="@+id/no_records_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -51,6 +62,56 @@
             android:orientation="vertical"
             android:gravity="center"
             >
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/panel_budget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="#ffffff"
+                android:elevation="5dp"
+                android:padding="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/budget_text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="You budgeted:"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
+                    android:textSize="12pt"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <ProgressBar
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:id="@+id/progress"
+                    app:layout_constraintTop_toBottomOf="@+id/budget_text1"
+                    app:layout_constraintBottom_toTopOf="@+id/budget_text2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:max="100"
+                    android:progress="45"/>
+
+                <TextView
+                    android:id="@+id/budget_text2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="You're at:"
+                    app:layout_constraintTop_toBottomOf="@+id/progress"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
+                    android:textSize="12pt"
+                    android:layout_marginBottom="10dp"
+                    />
+
+
+            </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/panel_1"
@@ -74,6 +135,7 @@
                     android:gravity="right"
                     android:textStyle="bold"
                     android:textSize="12pt"
+
                     />
 
                 <TextView
@@ -119,6 +181,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintBaseline_toBaselineOf="@+id/panel_1_days"
                     app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginRight="5pt"
                     android:textStyle="bold"
                     android:textSize="12pt"/>
             </android.support.constraint.ConstraintLayout>
@@ -139,7 +202,7 @@
                     android:id="@+id/panel_2_text1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="You've spent:"
+                    android:text="You've\nspent:"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:fontFamily="sans-serif"
@@ -154,9 +217,9 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/panel_2_text1"
                     app:layout_constraintRight_toLeftOf="@+id/panel_2_cents"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="sans-serif-condensed"
                     android:text="$0"
-                    android:textSize="30pt"
+                    android:textSize="50pt"
                     android:textStyle="bold"
                     />
 
@@ -168,7 +231,8 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/panel_2_dollars"
                     app:layout_constraintRight_toRightOf="parent"
                     android:textStyle="bold"
-                    android:textSize="12pt"/>
+                    android:textSize="12pt"
+                    />
             </android.support.constraint.ConstraintLayout>
 
 
@@ -207,7 +271,7 @@
                     android:id="@+id/viewRecords"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="See what you paid for"
+                    android:text="Oh man, What did I buy?"
                     android:layout_marginBottom="10dp"
                     android:background="#ffffff"
                     android:elevation="5dp"

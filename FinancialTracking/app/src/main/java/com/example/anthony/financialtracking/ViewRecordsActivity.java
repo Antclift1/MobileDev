@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +19,7 @@ public class ViewRecordsActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecordViewModel mRecordViewModel;
+    private TextView records_title;
     int days;
 
     @Override
@@ -55,6 +57,13 @@ public class ViewRecordsActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        records_title = findViewById(R.id.records_title);
+        String title;
+        if(days==1){
+            title = "In the past " + days +" day:";
+        }
+        else { title = "In the past " + days +" days:";}
+        records_title.setText(title);
     }
 
     public void viewAll(){

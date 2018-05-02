@@ -156,13 +156,6 @@ public class RecordViewModel extends AndroidViewModel {
         return -1;
     }
 
-    public void setUpTest(){
-        List<Record> records_list = liveData.getValue();
-        //sort the records
-        if (records_list == null || records_list.isEmpty()) {
-            populateDatabase();
-        }
-    }
 
     public Context getContext() {
         return context;

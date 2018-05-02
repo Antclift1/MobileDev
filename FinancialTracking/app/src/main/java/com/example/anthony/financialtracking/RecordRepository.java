@@ -163,12 +163,20 @@ public class RecordRepository {
         protected Void doInBackground(final String[]... params) {
             String[] types = params[0];
             mAsyncTaskDao.deleteAll();
-            for(int i=0; i<30; i++){
+            for(int i=0; i<50; i++){
                 String name = "RecordGen" + i;
                 String type = types[r.nextInt(types.length)];
-                double amount = ((double)r.nextInt(100000))/100;
+                double amount = ((double)r.nextInt(5000))/100;
                 Record rec = new Record(name, amount, type);
-                rec.setTimestamp(rec.getTimestamp()- ThreadLocalRandom.current().nextLong(TimeUnit.DAYS.toMillis(7)));
+                rec.setTimestamp(rec.getTimestamp()- ThreadLocalRandom.current().nextLong(TimeUnit.DAYS.toMillis(90)));
+                mAsyncTaskDao.insert(rec);
+                amount = ((double)r.nextInt(1000))/100;
+                rec = new Record("Tacos!", amount, "Food");
+                rec.setTimestamp(rec.getTimestamp()- ThreadLocalRandom.current().nextLong(TimeUnit.DAYS.toMillis(90)));
+                mAsyncTaskDao.insert(rec);
+                amount = ((double)r.nextInt(2000))/100;
+                rec = new Record("Tequila!", amount, "Alcohol");
+                rec.setTimestamp(rec.getTimestamp()- ThreadLocalRandom.current().nextLong(TimeUnit.DAYS.toMillis(90)));
                 mAsyncTaskDao.insert(rec);
 
             }

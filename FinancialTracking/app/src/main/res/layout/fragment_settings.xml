@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SettingsFragment">
+
 
     <ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".SettingsFragment"
+    android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="#ffffff"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:padding="20dp">
             <!--Profile Picture!-->
 
 
             <ImageView
                 android:id="@+id/profilePicture"
                 android:layout_width="150dp"
-                android:layout_height="250dp"
+                android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:src="@drawable/camera" />
             <!--
@@ -45,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Total Points"
+                android:text="Your info:"
                 android:textSize="30dp" />
 
             <Button
@@ -57,25 +61,24 @@
                 android:text="Personal Budget" />
 
             <Button
-                android:id="@+id/achievements"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:text="Points and Achievements" />
-
-            <Button
-                android:id="@+id/editProfile"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Edit Profile" />
-
-            <Button
                 android:id="@+id/logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="logout"
                 android:text="Switch User" />
+            <Button
+                android:id="@+id/populate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="Populate" />
+
+            <Button
+                android:id="@+id/clear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Clear" />
+
+
         </LinearLayout>
     </ScrollView>
-
-</RelativeLayout>
