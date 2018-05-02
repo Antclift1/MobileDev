@@ -1,67 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    tools:context=".SubmitRecordFragment">
-
-
-    <LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+<android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="20dp"
+    android:background="#ffffff"
+    android:elevation="5dp"
+    android:padding="20dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".SubmitRecordFragment"
+    >
+    <ImageView
+        android:id="@+id/submit_icon"
         android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:src="@drawable/moneybag"
+        android:layout_marginTop="5pt"
+        android:layout_marginBottom="5pt"
+        android:padding="10pt"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/grid"
+        />
+    <GridLayout
+        android:id="@+id/grid"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="20dp"
-        android:background="#ffffff"
-        android:elevation="5dp"
-        android:padding="20dp">
-        <!--The X box in the wireframe!-->
+        android:rowCount="3"
+        android:columnCount="2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
         <TextView
-            android:id="@+id/submit_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textSize="20pt"
             android:textStyle="bold"
-            android:text="New Record"
-            android:gravity="center"/>
-
-        <ImageView
-            android:id="@+id/submit_icon"
-            android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:src="@drawable/moneybag"
-            android:layout_marginTop="5pt"
-            android:layout_marginBottom="5pt"
-            android:padding="10pt"
-            android:background="@color/colorPrimary"
-            />
-
-        <Spinner
-            android:id="@+id/submit_record_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             />
-
-        <EditText
-            android:id="@+id/submit_record_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="I paid:"
+            android:layout_columnWeight="1"
+            android:layout_gravity="right"/>
 
         <com.blackcat.currencyedittext.CurrencyEditText
             android:id="@+id/submit_record_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal" />
+            android:textSize="20pt"
+            android:textStyle="bold"
+            android:hint="$0.00"
+            android:inputType="numberDecimal"
+            android:layout_columnWeight="2"
+            android:layout_gravity="left"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20pt"
+            android:textStyle="bold"
+            android:text="For:"
+            android:layout_gravity="right"/>
+
+        <EditText
+            android:id="@+id/submit_record_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName"
+            android:textSize="20pt"
+            android:textStyle="bold"
+            android:hint="Name" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20pt"
+            android:textStyle="bold"
+            android:text="It is:"
+            android:layout_gravity="right"/>
+
+        <Spinner
+            android:id="@+id/submit_record_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20pt"
+            android:textStyle="bold"
+            />
+    </GridLayout>
 
         <Button
             android:id="@+id/submit_record_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit" />
-    </LinearLayout>
+            android:text="Submit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/grid"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
 
+</android.support.constraint.ConstraintLayout>
 </ScrollView>

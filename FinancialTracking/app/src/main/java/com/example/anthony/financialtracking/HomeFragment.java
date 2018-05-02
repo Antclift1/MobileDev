@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -43,9 +44,13 @@ public class HomeFragment extends Fragment {
     private double[] record_sums;
     private LiveData<List<Record>> records;
     private Button viewRecords;
+    private ImageButton daysUp;
+    private ImageButton daysDown;
     //Hidden panel that is displayed when no records exist
     private LinearLayout hiddenPanel;
     private LinearLayout overviewContent;
+    private Observer<List<Record>> recordObserver;
+    private int days = 7;
 
 
     public HomeFragment() {
@@ -75,12 +80,29 @@ public class HomeFragment extends Fragment {
         hiddenPanel = view.findViewById(R.id.no_records_panel);
         overviewContent = view.findViewById(R.id.overview_wrapper);
 
+        daysUp = view.findViewById(R.id.daysUp);
+        daysDown = view.findViewById(R.id.daysDown);
+
+        daysUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                daysUp();
+            }
+        });
+
+        daysDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                daysDown();
+            }
+        });
         records = mRecordViewModel.getAllRecords();
         //onChange runs when the dataset changes
-        final Observer<List<Record>> recordObserver = new Observer<List<Record>>() {
+       recordObserver = new Observer<List<Record>>() {
             @Override
             public void onChanged(@Nullable final List<Record> newData) {
                 // Update the UI, in this case, a TextView.
+                draw();
                 draw();
             }
         };
@@ -90,9 +112,57 @@ public class HomeFragment extends Fragment {
         //TODO remove after testing
         //Popualtes the database with 30 random entries.
         //mRecordViewModel.setUpTest();
-        draw();
         return view;
     }
+
+
+
+    private void daysUp(){
+        switch (panel1Days.getText().toString()) {
+            case "1":
+                panel1Days.setText("7");
+                days =(7);
+                break;
+            case "7":
+                panel1Days.setText("14");
+                days =(14);break;
+            case "14":
+                panel1Days.setText("30");
+                days =(30);break;
+            case "30":
+                panel1Days.setText("90");
+                days =(90);break;
+            case "90":
+
+                days =(7);break;
+                default:break;
+        }
+        draw();
+    }
+
+    private void daysDown(){
+        switch (panel1Days.getText().toString()) {
+            case "1":
+                //panel1Days.setText("7");
+                //days =(7);
+                break;
+            case "7":
+                panel1Days.setText("1");
+                days =(1);break;
+            case "14":
+                panel1Days.setText("7");
+                days =(7);break;
+            case "30":
+                panel1Days.setText("14");
+                days =(14);break;
+            case "90":
+                panel1Days.setText("30");
+                days =(30);break;
+            default:break;
+        }
+        draw();
+    }
+
 
     /**
      * Sets all the info in the panels on the home screen. Splitting it up to make future dev easier
@@ -114,7 +184,7 @@ public class HomeFragment extends Fragment {
     }
     private void setTexts(){
             //TODO change summary by day input
-            record_sums = mRecordViewModel.getSums(-1);
+        record_sums = mRecordViewModel.getSums(Integer.parseInt(panel1Days.getText().toString()));
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         String s = formatter.format(record_sums[record_sums.length - 1]);
         String dollars = s.substring(0, s.length()-3);
@@ -122,13 +192,10 @@ public class HomeFragment extends Fragment {
         panel2Dollars.setText(dollars);
         panel2Cents.setText(cents);
 
-
-
     }
 
     private void setGraph(){
-
-        mRecordViewModel.makePieChart(panelPie);
+        mRecordViewModel.makePieChart(panelPie, days);
     }
 
 
@@ -166,6 +233,7 @@ public class HomeFragment extends Fragment {
 
     private void launchRecordView(){
         Intent intent = new Intent(this.getContext(), ViewRecordsActivity.class);
+        intent.putExtra("days", days);
         startActivity(intent);
     }
 

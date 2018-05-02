@@ -40,6 +40,7 @@ public class RecordRepository {
     //Live view of the data
     private LiveData<List<Record>> mAllRecords;
 
+
     /**
      * Constructor for the repository
      * Gets a handle to the database and inits vars
@@ -59,6 +60,13 @@ public class RecordRepository {
         return mAllRecords;
     }
 
+    /**
+     * Wrapper method for getAllRecords
+     * @return a LiveData containing a list of all the records with time stamp>time
+     */
+    LiveData<List<Record>> getAllRecords(long time) {return mRecordDao.getAllRecords(time);
+    }
+
 
     /**
      * This method inserts the record into the database
@@ -70,10 +78,15 @@ public class RecordRepository {
         new insertAsyncTask(mRecordDao).execute(record);
     }
 
+
     /**
      * clears the database of all entries
      */
     public void clearDatabase(){ new clearDbAsyncTask(mRecordDao).execute();}
+
+    public void delete(Record record) {new deleteAsyncTask(mRecordDao).execute(record);}
+
+    public void update(Record record) {new updateAsyncTask(mRecordDao).execute(record);}
 
     /**
      * Adds 30 randomonly generated records to the database
@@ -108,6 +121,32 @@ public class RecordRepository {
         @Override
         protected Void doInBackground(Void... voids) {
             mAsyncTaskDao.deleteAll();
+            return null;
+        }
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<Record, Void, Void> {
+        private RecordDao mAsyncTaskDao;
+
+        deleteAsyncTask(RecordDao dao) {mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Record... params) {
+            mAsyncTaskDao.delete(params[0]);
+            return null;
+        }
+    }
+
+    private static class updateAsyncTask extends AsyncTask<Record, Void, Void> {
+        private RecordDao mAsyncTaskDao;
+
+        updateAsyncTask(RecordDao dao) {mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Record... params) {
+            mAsyncTaskDao.update(params[0]);
             return null;
         }
     }

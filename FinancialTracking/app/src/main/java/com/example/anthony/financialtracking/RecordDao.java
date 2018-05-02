@@ -48,4 +48,7 @@ public interface RecordDao {
 
     @Query("SELECT * from Record")
     LiveData<List<Record>> getAllRecords();
+
+    @Query("SELECT * from Record WHERE Record.timestamp >= :time")
+    LiveData<List<Record>> getAllRecords(long time);
 }

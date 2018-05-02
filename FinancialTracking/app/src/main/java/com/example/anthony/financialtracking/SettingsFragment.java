@@ -2,13 +2,22 @@ package com.example.anthony.financialtracking;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import static android.app.Activity.RESULT_OK;
+import static com.example.anthony.financialtracking.SignupActivity.getUser;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,10 +38,11 @@ import java.net.URLEncoder;
  * {@link SettingsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class SettingsFragment extends Fragment{
+public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
-    TextView nameField;
+    ImageView profilePicture;
+    TextView name;
     String username;
     String[] userdata;
 
@@ -44,19 +54,64 @@ public class SettingsFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        profilePicture = (ImageView)view.findViewById(R.id.profilePicture);
+        name = (TextView)view.findViewById(R.id.name);
         username = ((MainActivity)this.getActivity()).username;
 
-        nameField = (TextView) view.findViewById(R.id.ProfileName);
-
+        name.setText(getUser());
+        if(savedInstanceState!=null){
+            profileImageBitmap = savedInstanceState.getParcelable("BitmapImage");
+            profilePicture.setImageBitmap(profileImageBitmap);
+        }
+        profilePicture.setOnClickListener(this);
         return view;
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(savedInstanceState!=null) {
+            profileImageBitmap = savedInstanceState.getParcelable("BitmapImage");
+            profilePicture.setImageBitmap(profileImageBitmap);
+        }
 
     }
-
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    protected void onTakePicture(View view){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
+    }
+    Bitmap profileImageBitmap = null;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_IMAGE_CAPTURE&&
+                resultCode==RESULT_OK){
+            Bundle extras = data.getExtras();
+            profileImageBitmap=(Bitmap)extras.get("data");
+            profilePicture.setImageBitmap(profileImageBitmap);
+        }
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
+        }
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putParcelable("BitmapImage", profileImageBitmap);
+
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if(savedInstanceState!=null) {
+            profileImageBitmap = savedInstanceState.getParcelable("BitmapImage");
+            profilePicture.setImageBitmap(profileImageBitmap);
         }
     }
 
@@ -77,6 +132,13 @@ public class SettingsFragment extends Fragment{
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == profilePicture.getId()){
+            onTakePicture(view);
+        }
     }
 
     /**
@@ -143,7 +205,7 @@ public class SettingsFragment extends Fragment{
                         userdata[i] = (jsonArray.get(i).toString());
                     }
                 }
-                nameField.setText(userdata[5] + ", " + userdata[4]);
+                name.setText(userdata[5] + ", " + userdata[4]);
 
             }catch (Exception ex) {
                 ex.printStackTrace();

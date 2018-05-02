@@ -51,14 +51,16 @@ public class ChartMaker {
      * with the returned data to set your pie chart
      * @return pie chart data
      */
-    public void makePieChart(PieChart pie){
+    public void makePieChart(PieChart pie, int days){
         LiveData<List<Record>> record_live= mRVM.getAllRecords();
         List<Record> records_list = record_live.getValue();
         List<PieEntry> entries = new ArrayList<>();
 
-        double[] sums = sumByType(records_list);
+        double[] sums = mRVM.getSums(days);
         for(int i=0; i<types.length; i++){
-            entries.add(new PieEntry((float) sums[i], types[i]));
+            if(sums[i]>0) {
+                entries.add(new PieEntry((float) sums[i], types[i]));
+            }
         }
         PieDataSet set = new PieDataSet(entries, "Expenses");
         int[]colors = context.getResources().getIntArray(R.array.rainbow);

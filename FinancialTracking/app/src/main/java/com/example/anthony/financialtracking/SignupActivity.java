@@ -21,6 +21,7 @@ public class SignupActivity extends Activity implements LoginResponse{
     private RadioGroup genderGroup;
     private String user;
 
+    public static String name;
 
     RadioButton radioButton;
 
@@ -58,6 +59,7 @@ public class SignupActivity extends Activity implements LoginResponse{
     //submit the signup information
     public void submit(View view){
         String username = usernameField.getText().toString();
+        name = username;
         String email = emailField.getText().toString();
         int selectedGender = genderGroup.getCheckedRadioButtonId();
         radioButton = (RadioButton) findViewById(selectedGender);
@@ -105,5 +107,8 @@ public class SignupActivity extends Activity implements LoginResponse{
     public void processFinish(String result) {
         user = result;
         finish();
+    }
+    public static String getUser(){
+        return name;
     }
 }

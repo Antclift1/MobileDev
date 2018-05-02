@@ -90,6 +90,28 @@
                     app:layout_constraintRight_toRightOf="parent"
                      />
 
+                <ImageButton
+                    android:id="@+id/daysUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrowup"
+                    android:background="#80FFFFFF"
+                    app:layout_constraintTop_toTopOf="@+id/panel_1_days"
+                    app:layout_constraintLeft_toRightOf="@+id/panel_1_days"
+                    android:layout_marginTop="5dp"
+                    />
+
+                <ImageButton
+                    android:id="@+id/daysDown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrowdown"
+                    android:background="#80FFFFFF"
+                    app:layout_constraintBottom_toBottomOf="@+id/panel_1_days"
+                    app:layout_constraintLeft_toRightOf="@+id/panel_1_days"
+                    android:layout_marginBottom="5dp"
+                    />
+
                 <TextView
                     android:id="@+id/panel_1_text2"
                     android:text="days"
