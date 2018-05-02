@@ -22,17 +22,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SignupActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".SignupActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".TestActivity"
             android:exported="true" />
-        <activity android:name=".DetailActivity" />
-        <activity android:name=".PersonalBudgetActivity" />
+        <activity
+            android:name=".DetailActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".PersonalBudgetActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ViewRecordsActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".BudgetUpdateActivity"></activity>
+        <activity android:name=".SetBudgetActivity" android:theme="@style/AppTheme">
+
+        </activity>
     </application>
 
 </manifest>

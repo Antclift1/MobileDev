@@ -84,6 +84,7 @@ public class RecordAdapter extends
                             R.array.record_types, R.layout.custom_spinner_layout);
                     // Specify the layout to use when the list of choices appears
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
                     // Apply the adapter to the spinner
                     mEditType.setAdapter(adapter);
                     int spinnerPosition = adapter.getPosition(mType.getText());

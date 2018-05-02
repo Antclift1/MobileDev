@@ -1,23 +1,24 @@
 package com.example.anthony.financialtracking;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.anthony.financialtracking.SignupActivity.getUser;
+//import static com.example.anthony.financialtracking.SignupActivity.getUser;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,8 +45,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
     ImageView profilePicture;
     TextView name;
+    Button budget;
     String username;
     JSONObject userdata;
+    private RecordViewModel mRecordViewModel;
+    Button populate, clear;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -58,7 +62,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         profilePicture = (ImageView)view.findViewById(R.id.profilePicture);
-        name = (TextView)view.findViewById(R.id.name);
+        mRecordViewModel = ViewModelProviders.of(this).get(RecordViewModel.class);
+        /*name = (TextView)view.findViewById(R.id.name);
         username = ((MainActivity)getActivity()).getLogin();
 
         try {
@@ -70,17 +75,31 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             profileImageBitmap = savedInstanceState.getParcelable("BitmapImage");
             profilePicture.setImageBitmap(profileImageBitmap);
         }
-        profilePicture.setOnClickListener(this);
-        return view;
-    }
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if(savedInstanceState!=null) {
-            profileImageBitmap = savedInstanceState.getParcelable("BitmapImage");
-            profilePicture.setImageBitmap(profileImageBitmap);
-        }
+        */
+        populate=view.findViewById(R.id.populate);
+        populate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                populate();
+            }
+        });
+        clear=view.findViewById(R.id.clear);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clear();
+            }
+        });
 
+        profilePicture.setOnClickListener(this);
+        budget=view.findViewById(R.id.personalBudget);
+        budget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startBudget();
+            }
+        });
+        return view;
     }
     static final int REQUEST_IMAGE_CAPTURE = 1;
     protected void onTakePicture(View view){
@@ -104,22 +123,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             mListener.onFragmentInteraction(uri);
         }
     }
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState){
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putParcelable("BitmapImage", profileImageBitmap);
 
+    public void startBudget(){
+        Intent intent = new Intent(this.getContext(), SetBudgetActivity.class);
+        startActivity(intent);
     }
-
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if(savedInstanceState!=null) {
-            profileImageBitmap = savedInstanceState.getParcelable("BitmapImage");
-            profilePicture.setImageBitmap(profileImageBitmap);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         GetProfile getProfile = new GetProfile();
@@ -169,6 +177,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         ((MainActivity)getActivity()).updateBudget(view);
     }
 
+    public void populate(){
+        mRecordViewModel.populateDatabase();
+    }
+    public void clear(){
+        mRecordViewModel.clearDatabase();
+    }
 
     public class GetProfile extends AsyncTask<String, String, Void> {
 

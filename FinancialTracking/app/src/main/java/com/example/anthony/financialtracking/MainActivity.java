@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         }
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         username = prefs.getString("username", "");
-        if(username == ""){
+        if(username.equals("")){
             //startlogin();
         }
         else {

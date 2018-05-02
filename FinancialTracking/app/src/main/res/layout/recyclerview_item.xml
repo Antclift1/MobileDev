@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:textSize="20pt"
             android:textStyle="bold"
-            android:text="Which is:"
+            android:text="It is:"
             android:layout_gravity="right"/>
 
         <Spinner

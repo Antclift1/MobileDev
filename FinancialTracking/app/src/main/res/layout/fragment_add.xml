@@ -58,6 +58,7 @@
             android:hint="$0.00"
             android:inputType="numberDecimal"
             android:layout_columnWeight="2"
+            android:textColor="@color/colorPrimary"
             android:layout_gravity="left"/>
 
         <TextView
@@ -75,7 +76,7 @@
             android:inputType="textPersonName"
             android:textSize="20pt"
             android:textStyle="bold"
-            android:hint="Name" />
+             />
 
         <TextView
             android:layout_width="match_parent"

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_margin="20dp"
+        android:background="#ffffff"
+        android:elevation="5dp"
+        android:padding="20dp"
+        android:layout_gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".SubmitRecordFragment"
+        >
+
+        <ImageView
+            android:id="@+id/submit_icon"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:src="@drawable/moneybag"
+            android:layout_marginTop="5pt"
+            android:layout_marginBottom="5pt"
+            android:padding="10pt"
+            android:background="@color/colorPrimary"
+            />
+        <TextView
+            android:id="@+id/budget_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20pt"
+        android:textStyle="bold"
+        android:text="Want a budget?"
+        android:layout_gravity="center"/>
+
+
+            <TextView
+                android:id="@+id/budget_textD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20pt"
+                android:textStyle="bold"
+                android:text="In one:"
+
+               />
+
+            <Spinner
+                android:id="@+id/budget_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20pt"
+                android:textStyle="bold"
+
+
+                />
+
+            <TextView
+                android:id="@+id/budget_textA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20pt"
+                android:textStyle="bold"
+                android:text="I'll spend:"
+                />
+
+            <com.blackcat.currencyedittext.CurrencyEditText
+                android:id="@+id/budget_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20pt"
+                android:textStyle="bold"
+                android:hint="$0.00"
+                android:inputType="numberDecimal"
+                android:textColor="@color/colorPrimary"
+                />
+
+
+        <Button
+            android:id="@+id/budget_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            />
+
+    </LinearLayout>
+</ScrollView>

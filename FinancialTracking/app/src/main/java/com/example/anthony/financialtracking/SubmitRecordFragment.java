@@ -50,6 +50,7 @@ public class SubmitRecordFragment extends Fragment {
         //Get spinner
         recordType = (Spinner) view.findViewById(R.id.submit_record_type);
         recordName = (EditText) view.findViewById(R.id.submit_record_name);
+        recordName.setHint("???");
         // Get text enter for amount
         recordAmount = (CurrencyEditText) view.findViewById(R.id.submit_record_amount);
         // Get field from view
