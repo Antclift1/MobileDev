@@ -34,7 +34,7 @@ public class Login extends AsyncTask<String, String, String> {
                 String username = (String)arg0[0];
                 String password = (String)arg0[1];
 
-                String link="http://ec2-18-216-10-60.us-east-2.compute.amazonaws.com/MobileDev/getProfile.php";
+                String link="http://ec2-18-216-10-60.us-east-2.compute.amazonaws.com/MobileDev/login.php";
                 String data  = URLEncoder.encode("username", "UTF-8") + "=" +
                         URLEncoder.encode(username, "UTF-8");
                 data += "&" + URLEncoder.encode("password", "UTF-8") + "=" +

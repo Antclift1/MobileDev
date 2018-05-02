@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.anthony.financialtracking.SignupActivity.getUser;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +42,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
     ImageView profilePicture;
-    TextView name;
+    public TextView name;
     String username;
     JSONObject userdata;
 
@@ -59,13 +58,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         profilePicture = (ImageView)view.findViewById(R.id.profilePicture);
         name = (TextView)view.findViewById(R.id.name);
-        username = ((MainActivity)getActivity()).getLogin();
-
-        try {
-            name.setText(userdata.getString("Lastname") + ", " + userdata.getString("Firstname"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        name.setText(username);
         if(savedInstanceState!=null){
             profileImageBitmap = savedInstanceState.getParcelable("BitmapImage");
             profilePicture.setImageBitmap(profileImageBitmap);
@@ -122,8 +115,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onAttach(Context context) {
-        GetProfile getProfile = new GetProfile();
-        getProfile.execute(username);
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;

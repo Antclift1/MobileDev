@@ -63,11 +63,11 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         username = prefs.getString("username", "");
         if(username == ""){
-            //startlogin();
+            startlogin();
         }
         else {
             Toast.makeText(this, "Welcome " + username, Toast.LENGTH_SHORT).show();
-            getUserData(username);
+            //getUserData(username);
         }
         //Finds the fragments from the manager and sets the variables
         android.support.v4.app.FragmentManager fragmentManager=getSupportFragmentManager();
@@ -131,7 +131,8 @@ public class MainActivity extends AppCompatActivity
             username = data.getExtras().getString("Username");
             SharedPreferences settings = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
             settings.edit().putString("username", username);
-            getUserData(username);
+            Toast.makeText(this, "Welcome " + username, Toast.LENGTH_SHORT).show();
+            //getUserData(username);
         }
         //Toast.makeText(this, username, Toast.LENGTH_SHORT).show();
     }
@@ -143,7 +144,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void getUserData(String username) {
+    public JSONObject getUserData(String username) {
         try {
             String user = username;
             String link = "http://ec2-18-216-10-60.us-east-2.compute.amazonaws.com/MobileDev/getProfile.php";
@@ -172,9 +173,9 @@ public class MainActivity extends AppCompatActivity
             }
 
             JSONObject obj = new JSONObject(sb.toString());
-            profileData =  obj;
+            return  obj;
         }catch (Exception ex) {
-
+            return new JSONObject();
         }
     }
 }
