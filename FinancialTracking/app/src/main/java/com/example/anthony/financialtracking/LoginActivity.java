@@ -13,7 +13,6 @@ public class LoginActivity extends Activity implements LoginResponse{
     static final int REGISTER_REQUEST_CODE = 1;
     private EditText usernameField,passwordField;
     private String user;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity
             submitRecordFragment = (SubmitRecordFragment)getSupportFragmentManager().getFragment(savedInstanceState,"submitRecordFragment");
             settingsFragment = (SettingsFragment)getSupportFragmentManager().getFragment(savedInstanceState, "settingsFragment");
         }
-
+        viewPager.setOffscreenPageLimit(2);
         // Sets up a tabLayout to navigate between screens
         TabLayout tabLayout = new TabLayout(this);
         tabLayout.setupWithViewPager(viewPager);
