@@ -100,6 +100,13 @@ public class MainActivity extends AppCompatActivity
         startlogin();
     }
 
+    public void updateBudget(View view) {
+
+        Intent budgetIntent = new Intent(this, BudgetUpdateActivity.class);
+        budgetIntent.putExtra("Username", username);
+        startActivity(budgetIntent);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

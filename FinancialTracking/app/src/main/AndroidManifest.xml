@@ -29,8 +29,10 @@
             android:exported="true" />
         <activity android:name=".DetailActivity" />
         <activity android:name=".PersonalBudgetActivity" />
-        <activity android:name=".ViewRecordsActivity"
-            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".ViewRecordsActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".BudgetUpdateActivity"></activity>
     </application>
 
 </manifest>

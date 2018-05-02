@@ -30,14 +30,33 @@ public class Signup extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... arg0) {
         try{
-            String username = (String)arg0[0];
-            String password = (String)arg0[1];
+            String email = (String)arg0[0];
+            String username = (String)arg0[1];
+            String password = (String)arg0[2];
+            String budget = (String)arg0[3];
+            String first = (String)arg0[4];
+            String last = (String)arg0[5];
+            String gender = (String)arg0[6];
+            String dob = (String)arg0[7];
 
             String link="http://ec2-18-216-10-60.us-east-2.compute.amazonaws.com/MobileDev/signup.php";
-            String data  = URLEncoder.encode("username", "UTF-8") + "=" +
+            String data  = URLEncoder.encode("email", "UTF-8") + "=" +
+                    URLEncoder.encode(email, "UTF-8");
+            data += "&" + URLEncoder.encode("username", "UTF-8") + "=" +
                     URLEncoder.encode(username, "UTF-8");
             data += "&" + URLEncoder.encode("password", "UTF-8") + "=" +
                     URLEncoder.encode(password, "UTF-8");
+            data += "&" + URLEncoder.encode("budget", "UTF-8") + "=" +
+                    URLEncoder.encode(budget, "UTF-8");
+            data += "&" + URLEncoder.encode("first", "UTF-8") + "=" +
+                    URLEncoder.encode(first, "UTF-8");
+            data += "&" + URLEncoder.encode("last", "UTF-8") + "=" +
+                    URLEncoder.encode(last, "UTF-8");
+            data += "&" + URLEncoder.encode("gender", "UTF-8") + "=" +
+                    URLEncoder.encode(gender, "UTF-8");
+            data += "&" + URLEncoder.encode("dob", "UTF-8") + "=" +
+                    URLEncoder.encode(dob, "UTF-8");
+
 
             URL url = new URL(link);
             URLConnection conn = url.openConnection();

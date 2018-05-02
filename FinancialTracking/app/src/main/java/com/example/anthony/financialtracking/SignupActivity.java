@@ -16,8 +16,8 @@ public class SignupActivity extends Activity implements LoginResponse{
 
 
     static final int REGISTER_REQUEST_CODE = 1;
-    private EditText emailField,usernameField,passwordField,passwordField2;
-    private EditText firstField, secondField, dobField;
+    private EditText emailField,usernameField,passwordField,passwordField2,budgetField;
+    private EditText firstField, lastField, dobField;
     private RadioGroup genderGroup;
     private String user;
 
@@ -35,8 +35,9 @@ public class SignupActivity extends Activity implements LoginResponse{
         passwordField2 = (EditText)findViewById(R.id.SignupConfirm);
 
         firstField = (EditText)findViewById(R.id.SignupFirst);
-        secondField = (EditText)findViewById(R.id.SignupLast);
+        lastField = (EditText)findViewById(R.id.SignupLast);
         dobField = (EditText)findViewById(R.id.SignupDOB);
+        budgetField = (EditText)findViewById(R.id.SignupBudget);
 
         genderGroup = (RadioGroup)findViewById(R.id.GenderGroup);
 
@@ -62,6 +63,7 @@ public class SignupActivity extends Activity implements LoginResponse{
         radioButton = (RadioButton) findViewById(selectedGender);
 
 
+
         Pattern p = Pattern.compile("[^a-zA-Z0-9]");
         boolean usernameSpecialChar = p.matcher(username).find();
 
@@ -84,7 +86,11 @@ public class SignupActivity extends Activity implements LoginResponse{
         else{
             String gender = radioButton.getText().toString();
             String password = passwordField.getText().toString();
-            new Signup(this).execute(username, password);
+            String first = firstField.getText().toString();
+            String last = lastField.getText().toString();
+            String dob = dobField.getText().toString();
+            String budget = budgetField.getText().toString();
+            new Signup(this).execute(email, username, password, first, last, gender, dob, budget);
 
         }
 
